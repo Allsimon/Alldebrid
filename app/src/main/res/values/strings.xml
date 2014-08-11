@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alldebrid</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="loading">Loading…</string>
+    <string name="username">Username</string>
+    <string name="createAccount"><a href="http://www.alldebrid.com/register/">Create an account</a></string>
+    <string name="icon">Navigation drawer Icon</string>
+    <string name="account">Account</string>
+    <string name="torrent">Torrents</string>
+    <string name="setting">Settings</string>
+    <string name="unrestrainLink">Unrestrain your links and magnets</string>
+    <string name="debrid">Debrid this</string>
+    <string name="trafficInfo">Traffic information</string>
+    <string name="yourBestSpeedOnAD">Best speed on AD:</string>
+    <string name="connectionType">Connection type:</string>
+    <string name="totalDownloaded">Total downloaded:</string>
+    <string name="limitedHosts">Limited Hosts</string>
+    <string name="debridLinks">Debrid links</string>
+    <string name="logout">Log out</string>
+    <string name="notAcknowledged">NA</string>
+    <string name="desc_overflow_button">Overflow Button</string>
+    <string name="action_remove">Remove</string>
+    <string name="copy_links">Copy link</string>
+    <string name="debridTorrent">Pick a torrent file</string>
+    <string name="checkbox_split_torrent_file">Split the file (1 part = 1 Gb)</string>
+    <string name="automatic_copy_paste">Automatic copy paste</string>
+    <string name="automatic_download">Automatic download</string>
+    <string name="use_built_in_download_manager">Use the built-in download manager</string>
+    <string name="download">Download</string>
+    <string name="general">General</string>
+</resources>

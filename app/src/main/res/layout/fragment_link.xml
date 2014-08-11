@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sha"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/unrestrainLink" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/etUnrestrainLink"
+            android:minLines="5" />
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/bUnrestrainLink"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/debrid"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_gravity="right"
+            custom:pb_colorComplete="@color/green_complete"
+            custom:pb_colorNormal="@color/yellowAlldebrid"
+            custom:pb_colorPressed="@color/yellowAlldebridPressed"
+            custom:pb_colorProgress="@color/purple_progress"
+            custom:pb_textError="@string/error"
+            custom:pb_textComplete="@string/success"
+            custom:pb_textProgress="@string/loading" />
+    </LinearLayout>
+
+
+    <ListView
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:id="@+id/lvLinks"
+        android:layout_height="wrap_content" />
+</LinearLayout>
