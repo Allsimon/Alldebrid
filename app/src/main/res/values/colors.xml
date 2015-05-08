@@ -1,0 +1,19 @@
+<resources>
+
+    <color name="material_text_color_primary_light">#1C1C1C</color>
+    <color name="material_text_color_secondary_light">#727272</color>
+
+    <color name="material_text_color_primary_dark">#E3E3E3</color>
+    <color name="material_text_color_secondary_dark">#323232</color>
+
+
+
+    <color name="brand_primary">#FAC233</color>
+    <color name="brand_primary_accent">#f9b809</color>
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+</resources>

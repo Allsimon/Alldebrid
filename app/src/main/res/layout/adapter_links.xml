@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_vertical_list_item_list_small"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_toStartOf="@+id/tv_weight"
+        android:layout_toLeftOf="@+id/tv_weight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/space_horizontal_margin"
+        android:layout_marginStart="@dimen/space_horizontal_margin"
+        android:paddingTop="@dimen/space_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tool:text="Big buck bunny"
+            style="@style/material_text_body2_device" />
+
+        <TextView
+            android:id="@+id/tv_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/secondary_text_light"
+            tool:text="uptobox"
+            style="@style/material_text_caption" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/space_horizontal_margin"
+        tool:text="247Mo"
+        android:layout_toLeftOf="@+id/ibOverflow"
+        android:layout_toStartOf="@+id/ibOverflow"
+        android:layout_marginRight="@dimen/space_horizontal_margin"
+        style="@style/material_text_caption" />
+
+    <ImageButton
+        android:id="@+id/ibOverflow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/desc_overflow_button"
+        android:layout_marginRight="@dimen/space_horizontal_margin"
+        android:layout_marginEnd="@dimen/space_horizontal_margin"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_action_overflow"
+        style="@style/material_icon" />
+</RelativeLayout>

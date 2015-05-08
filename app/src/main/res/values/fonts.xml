@@ -1,0 +1,63 @@
+<resources>
+    <!--
+      material design typography scale
+      reference from http://www_google_com/design/spec/style/typography_html#typography-standard-styles
+      -->
+    <dimen name="material_text_display4_size">112sp</dimen>
+    <dimen name="material_text_display3_size">56dp</dimen>
+    <dimen name="material_text_display2_size">45sp</dimen>
+    <dimen name="material_text_display1_size">34sp</dimen>
+    <dimen name="material_text_headline_size">24sp</dimen>
+    <dimen name="material_text_title_size">20sp</dimen>
+    <dimen name="material_text_subhead_device_size">16sp</dimen>
+    <dimen name="material_text_subhead_desktop_size">15sp</dimen>
+    <dimen name="material_text_body2_device_size">14sp</dimen>
+    <dimen name="material_text_body2_desktop_size">13sp</dimen>
+    <dimen name="material_text_body1_device_size">14sp</dimen>
+    <dimen name="material_text_body1_desktop_size">13sp</dimen>
+    <dimen name="material_text_caption_size">12sp</dimen>
+    <dimen name="material_text_menu_device_size">14sp</dimen>
+    <dimen name="material_text_menu_desktop_size">13sp</dimen>
+    <dimen name="material_text_button_size">14sp</dimen>
+
+    <!--
+      material design typography style
+       weight: thin < light < regular < medium < bold
+      reference from http://www_google_com/design/spec/style/typography_html#typography-standard-styles
+      android typeface constants
+       normal=0, bold=1, bolditalic=2, bolditalic=3
+      reference from http://developer_android_com/reference/android/graphics/typeface_html#constants
+      -->
+    <!-- light is normal -->
+    <integer name="material_text_style_light">0</integer>
+    <!-- regular is bold -->
+    <integer name="material_text_style_regular">1</integer>
+    <!-- medium is normal -->
+    <integer name="material_text_style_medium">0</integer>
+
+
+
+    <integer name="material_text_display4_style">@integer/material_text_style_light</integer>
+    <integer name="material_text_display3_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_display2_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_display1_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_headline_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_title_style">@integer/material_text_style_medium</integer>
+    <integer name="material_text_subhead_device_style">@integer/material_text_style_regular
+    </integer>
+    <integer name="material_text_subhead_desktop_style">@integer/material_text_style_regular
+    </integer>
+    <integer name="material_text_body2_device_style">@integer/material_text_style_medium</integer>
+    <integer name="material_text_body2_desktop_style">@integer/material_text_style_medium</integer>
+    <integer name="material_text_body1_device_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_body1_desktop_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_caption_style">@integer/material_text_style_regular</integer>
+    <integer name="material_text_menu_device_style">@integer/material_text_style_medium</integer>
+    <integer name="material_text_menu_desktop_style">@integer/material_text_style_medium</integer>
+    <integer name="material_text_button_style">@integer/material_text_style_medium</integer>
+
+    <!--https://www.google.com/design/spec/style/typography.html#typography-other-typographic-guidelines-->
+    <item name="material_text_contrast_high" format="float" type="dimen">0.87</item>
+    <item name="material_text_contrast_medium" format="float" type="dimen">0.54</item>
+
+</resources>

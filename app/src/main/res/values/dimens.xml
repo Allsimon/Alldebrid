@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="listview_vertical">48dp</dimen>
+
+    <dimen name="icon_big">60dp</dimen>
+    <dimen name="icon_small">24dp</dimen>
+    <dimen name="padding_small_icon">12dp</dimen>
+
+    <dimen name="nav_drawer">240dp</dimen>
+    <dimen name="general_margin_large">72dp</dimen>
+
+    <dimen name="size_touch_target">48dp</dimen>
+
+    <dimen name="space_content">8dp</dimen>
+
+    <dimen name="space_horizontal_margin">16dp</dimen>
+    <dimen name="space_horizontal_margin_icon">@dimen/space_horizontal_margin</dimen>
+    <dimen name="space_horizontal_margin_icon_text">72dp</dimen>
+
+    <dimen name="space_vertical_list_item_list">72dp</dimen>
+    <dimen name="space_vertical_list_item_list_small">64dp</dimen>
+    <dimen name="space_vertical_list_item_mixed_content">56dp</dimen>
+    <dimen name="space_vertical_list_item_navigation_drawer">48dp</dimen>
+
+    <dimen name="space_vertical_statusbar">24dp</dimen>
+
+    <dimen name="space_vertical_toolbar">56dp</dimen>
+    <dimen name="space_vertical_subtitle">48dp</dimen>
+
+    <dimen name="space_vertical_list_item_large">22sp</dimen>
+</resources>

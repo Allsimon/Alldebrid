@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:contentDescription="@string/icon"
+        android:layout_marginLeft="@dimen/space_horizontal_margin_icon"
+        android:layout_marginStart="@dimen/space_horizontal_margin_icon"
+        style="@style/material_icon" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/space_horizontal_margin_icon_text"
+        android:layout_marginStart="@dimen/space_horizontal_margin_icon_text"
+        android:layout_toLeftOf="@+id/counter"
+        android:layout_toStartOf="@+id/counter"
+        android:layout_marginRight="@dimen/space_content"
+        android:layout_marginEnd="@dimen/space_content"
+        style="@style/material_text_body2_device" />
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/space_horizontal_margin"
+        android:layout_marginEnd="@dimen/space_horizontal_margin"
+        android:lines="1"
+        android:maxLength="3"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        style="@style/material_text_caption" />
+</RelativeLayout>

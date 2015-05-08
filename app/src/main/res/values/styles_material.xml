@@ -1,0 +1,106 @@
+<resources>
+
+    <style name="material_text_display4">
+        <item name="android:textSize">@dimen/material_text_display4_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="material_text_display3">
+        <item name="android:textSize">@dimen/material_text_display3_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_display2">
+        <item name="android:textSize">@dimen/material_text_display2_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_display1">
+        <item name="android:textSize">@dimen/material_text_display1_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_headline">
+        <item name="android:textSize">@dimen/material_text_headline_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_title">
+        <item name="android:textSize">@dimen/material_text_title_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="material_text_subhead_device">
+        <item name="android:textSize">@dimen/material_text_subhead_device_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_subhead_desktop">
+        <item name="android:textSize">@dimen/material_text_subhead_desktop_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_body2_device">
+        <item name="android:textSize">@dimen/material_text_body2_device_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="material_text_body2_desktop">
+        <item name="android:textSize">@dimen/material_text_body2_desktop_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="material_text_body1_device">
+        <item name="android:textSize">@dimen/material_text_body1_device_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_body1_desktop">
+        <item name="android:textSize">@dimen/material_text_body1_desktop_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_caption">
+        <item name="android:textSize">@dimen/material_text_caption_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_menu_device">
+        <item name="android:textSize">@dimen/material_text_menu_device_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="material_text_menu_desktop">
+        <item name="android:textSize">@dimen/material_text_menu_desktop_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+    </style>
+
+    <style name="material_text_button">
+        <item name="android:textSize">@dimen/material_text_button_size</item>
+        <item name="android:alpha">@dimen/material_text_contrast_high</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <style name="material_icon">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:alpha">@dimen/material_text_contrast_medium</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+</resources>
