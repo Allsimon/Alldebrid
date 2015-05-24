@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.malek.alldebrid.API.API_Alldebrid;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 import com.malek.alldebrid.R;
@@ -28,7 +28,7 @@ import java.util.List;
 
 @EFragment(R.layout.fragment_link)
 @OptionsMenu(R.menu.fragment_link)
-public class LinkFragment extends AlldebridFragment {
+public class LinkFragment extends DebridFragment {
     public static final String ARG_LINKS = "argLinks";
     public static final String SAVESTATE_LINKS = "savestate_links";
     @ViewById(R.id.etUnrestrainLink)
@@ -67,7 +67,7 @@ public class LinkFragment extends AlldebridFragment {
         lvLinks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                API_Alldebrid.getInstance().saveFile(links.get(position));
+                SingletonHolder.SINGLETON.getDebrider().saveFile(links.get(position));
             }
         });
         if (getArguments() != null) {
@@ -85,7 +85,7 @@ public class LinkFragment extends AlldebridFragment {
         for (String link : links) {
             if (link.length() > 2) {
                 linkToUnrestrain++;
-                API_Alldebrid.getInstance().unrestrainLink(link);
+                SingletonHolder.SINGLETON.getDebrider().unrestrainLink(link);
             }
         }
     }
@@ -94,7 +94,7 @@ public class LinkFragment extends AlldebridFragment {
     public void onResume() {
         super.onResume();
         if (isLargeLandscapeScreen()) {
-            API_Alldebrid.getInstance().getLimitedHostsAndDownloadInfos();
+            SingletonHolder.SINGLETON.getDebrider().getLimitedHostsAndDownloadInfos();
         }
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (preferences.getBoolean("autoCopyPaste", false) && getArguments() == null)
@@ -111,11 +111,15 @@ public class LinkFragment extends AlldebridFragment {
                 linkRestrained = 0;
             }
         }
+        addLinkToUI(link);
+    }
+
+    public void addLinkToUI(Link link) {
         links.add(link);
         refreshAdapter();
 
         if (preferences.getBoolean("autoDownload", false))
-            API_Alldebrid.getInstance().saveFile(link);
+            SingletonHolder.SINGLETON.getDebrider().saveFile(link);
     }
 
     private void refreshAdapter() {
@@ -173,7 +177,8 @@ public class LinkFragment extends AlldebridFragment {
 
     @Override
     public void onLinkRestrainFailed(Link link, String error) {
-        onLinkRestrained(link);
+        mButtonDebrid.setProgress(-1);
+        addLinkToUI(link);
         link.setWeight(error);
     }
 }

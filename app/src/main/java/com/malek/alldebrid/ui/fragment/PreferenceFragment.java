@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 
 import com.malek.alldebrid.R;
 
-import org.androidannotations.annotations.EFragment;
-
 
 public class PreferenceFragment extends android.preference.PreferenceFragment {
 

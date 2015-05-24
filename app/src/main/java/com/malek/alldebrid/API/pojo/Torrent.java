@@ -41,11 +41,12 @@ public class Torrent extends Link {
         return link;
     }
 
-    public String[] getLinks() {
-        return link.split(";");
-    }
     public void setUnrestrainedLink(String link) {
         this.link = link.replaceAll("\\\\", "");
+    }
+
+    public String[] getLinks() {
+        return link.split(";");
     }
 
     public String getDownloadSpeed() {

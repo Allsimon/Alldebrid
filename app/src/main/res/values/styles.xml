@@ -36,12 +36,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="SampleAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorPrimary">@color/brand_primary</item>
         <item name="colorPrimaryDark">@color/material_text_color_primary_dark</item>
         <item name="colorAccent">@color/brand_primary_accent</item>
     </style>
-
 
 
     <style name="listview_general" parent="FragmentLayout">

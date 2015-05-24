@@ -57,7 +57,7 @@ public class TorrentAdapter extends BaseAdapter {
         holder.tvName.setText(torrent.getName());
         if ("finished".equals(torrent.getStatus())) {
             holder.tvWeight.setText(torrent.getWeight());
-            String linkCount = torrent.getLinks().length+" ";
+            String linkCount = torrent.getLinks().length + " ";
             if (torrent.getLinks().length > 1)
                 linkCount += mContext.getResources().getString(R.string.links);
             else

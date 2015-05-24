@@ -1,9 +1,14 @@
 package com.malek.alldebrid.API.utils;
 
 
+import com.malek.alldebrid.API.pojo.Account;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class XMLHandler extends DefaultHandler {
     public static XMLGettersSetters data = null;
@@ -14,8 +19,23 @@ public class XMLHandler extends DefaultHandler {
         return data;
     }
 
-    public static void setXMLData(XMLGettersSetters data) {
-        XMLHandler.data = data;
+    public static Account getAccount() {
+        Account account = new Account();
+        String cookie = getXMLData().getCookie();
+        String pseudo = getXMLData().getPseudo();
+        String date = getXMLData().getDate();
+        String type = getXMLData().getType();
+        String email = getXMLData().getEmail();
+        Calendar expirationDate = Calendar.getInstance();
+        expirationDate.add(Calendar.DATE, Integer.parseInt(date));
+
+        account.setUsername(pseudo);
+        account.setCookie(cookie);
+        account.setExpirationDate(expirationDate.getTime());
+        account.setType(type);
+        account.setEmailAdress(email);
+        account.setLastLogin(new Date());
+        return account;
     }
 
     @Override

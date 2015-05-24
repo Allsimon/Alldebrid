@@ -4,11 +4,11 @@ package com.malek.alldebrid.API.abstracted;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 
-public interface AlldebridObservable {
+public interface DebridObservable {
 
-    public void registerObserver(AlldebridObserver observer);
+    public void registerObserver(DebridObserver observer);
 
-    public void removeObserver(AlldebridObserver observer);
+    public void removeObserver(DebridObserver observer);
 
     public void notifyObserverLinkRestrained(Link link);
 

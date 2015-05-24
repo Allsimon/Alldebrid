@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.malek.alldebrid.API.API_Alldebrid;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 import com.malek.alldebrid.R;
@@ -28,7 +28,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 
 @EFragment(R.layout.fragment_torrent)
-public class TorrentFragment extends AlldebridFragment {
+public class TorrentFragment extends DebridFragment {
     @ViewById(R.id.lvTorrents)
     ListView lvTorrents;
     @ViewById(R.id.bAddTorrent)
@@ -41,7 +41,7 @@ public class TorrentFragment extends AlldebridFragment {
 
     @AfterViews
     public void afterView() {
-        API_Alldebrid.getInstance().getTorrents();
+        SingletonHolder.SINGLETON.getDebrider().getTorrents();
         mButtonFilePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +78,7 @@ public class TorrentFragment extends AlldebridFragment {
                     if (clip != null) {
                         for (int i = 0; i < clip.getItemCount(); i++) {
                             Uri uri = clip.getItemAt(i).getUri();
-                            API_Alldebrid.getInstance().addTorrent(uri.getPath(), false, true);
+                            SingletonHolder.SINGLETON.getDebrider().addTorrent(uri.getPath(), false, true);
                         }
                     }
                     // For Ice Cream Sandwich
@@ -89,14 +89,14 @@ public class TorrentFragment extends AlldebridFragment {
                     if (paths != null) {
                         for (String path : paths) {
                             Uri uri = Uri.parse(path);
-                            API_Alldebrid.getInstance().addTorrent(uri.getPath(), false, true);
+                            SingletonHolder.SINGLETON.getDebrider().addTorrent(uri.getPath(), false, true);
                         }
                     }
                 }
 
             } else {
                 Uri uri = data.getData();
-                API_Alldebrid.getInstance().addTorrent(uri.getPath(), false, true);
+                SingletonHolder.SINGLETON.getDebrider().addTorrent(uri.getPath(), false, true);
 
                 Logg.e(uri.getPath());
             }
@@ -123,12 +123,12 @@ public class TorrentFragment extends AlldebridFragment {
 
     @Override
     public void onTorrentAdded(Torrent torrent) {
-        API_Alldebrid.getInstance().getTorrents();
+        SingletonHolder.SINGLETON.getDebrider().getTorrents();
     }
 
     @Override
     public void onTorrentRemoved(Torrent torrent) {
-        API_Alldebrid.getInstance().getTorrents();
+        SingletonHolder.SINGLETON.getDebrider().getTorrents();
     }
 
     @Override
@@ -152,7 +152,7 @@ public class TorrentFragment extends AlldebridFragment {
         if (needRefresh)
             h.postDelayed(new Runnable() {
                 public void run() {
-                    API_Alldebrid.getInstance().getTorrents();
+                    SingletonHolder.SINGLETON.getDebrider().getTorrents();
                 }
             }, delay);
         refreshAdapter();

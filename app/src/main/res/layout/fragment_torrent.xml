@@ -20,6 +20,7 @@
 
         <com.dd.processbutton.iml.ActionProcessButton
             android:id="@+id/bAddTorrent"
+            style="@style/material_text_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_touch_target"
             android:layout_marginBottom="@dimen/space_content"
@@ -31,16 +32,15 @@
             custom:pb_colorProgress="@color/purple_progress"
             custom:pb_textComplete="@string/success"
             custom:pb_textError="@string/error"
-            custom:pb_textProgress="@string/loading"
-            style="@style/material_text_button" />
+            custom:pb_textProgress="@string/loading" />
 
         <CheckBox
             android:id="@+id/cb_split_file"
+            style="@style/material_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/checkbox_split_torrent_file"
-            style="@style/material_text_caption" />
+            android:text="@string/checkbox_split_torrent_file" />
     </LinearLayout>
 
     <ListView

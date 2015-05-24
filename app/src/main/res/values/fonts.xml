@@ -36,7 +36,6 @@
     <integer name="material_text_style_medium">0</integer>
 
 
-
     <integer name="material_text_display4_style">@integer/material_text_style_light</integer>
     <integer name="material_text_display3_style">@integer/material_text_style_regular</integer>
     <integer name="material_text_display2_style">@integer/material_text_style_regular</integer>

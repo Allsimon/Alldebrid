@@ -97,6 +97,7 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
     <style name="material_icon">
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>

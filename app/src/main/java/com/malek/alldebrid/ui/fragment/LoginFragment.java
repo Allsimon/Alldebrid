@@ -1,7 +1,5 @@
 package com.malek.alldebrid.ui.fragment;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -9,13 +7,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.malek.alldebrid.API.API_Alldebrid;
-import com.malek.alldebrid.API.abstracted.AbstractAlldebrid;
+import com.malek.alldebrid.API.abstracted.AbstractDebrider;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 import com.malek.alldebrid.R;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -23,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
 
 
 @EFragment(R.layout.fragment_login)
-public class LoginFragment extends AlldebridFragment {
+public class LoginFragment extends DebridFragment {
     @ViewById(R.id.username)
     EditText etUsername;
     @ViewById(R.id.password)
@@ -47,9 +44,7 @@ public class LoginFragment extends AlldebridFragment {
 
     @Click(R.id.logoutButton)
     public void onLogoutButtonClicked() {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-        editor.clear();
-        editor.apply();
+        SingletonHolder.SINGLETON.getPersister().clear();
     }
 
 
@@ -57,20 +52,18 @@ public class LoginFragment extends AlldebridFragment {
     public void initEditText() {
         mButtonLogin.setMode(ActionProcessButton.Mode.ENDLESS);
         tvCreateAccount.setMovementMethod(LinkMovementMethod.getInstance());
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String login = preferences.getString(AbstractAlldebrid.LOGIN, "");
-        String password = preferences.getString(AbstractAlldebrid.PASSWORD, "");
-        etUsername.setText(login);
+        String username = SingletonHolder.SINGLETON.getPersister().getAccount().getUsername();
+        String password = SingletonHolder.SINGLETON.getPersister().getAccount().getPassword();
+        etUsername.setText(username);
         etPassword.setText(password);
-        if (API_Alldebrid.getInstance().isLogged())
+        if (SingletonHolder.SINGLETON.getDebrider().isLogged())
             mButtonLogout.setVisibility(View.VISIBLE);
-
     }
 
     public void doLogin() {
         String username = this.etUsername.getText().toString();
         String password = this.etPassword.getText().toString();
-        API_Alldebrid.getInstance().login(username, password);
+        SingletonHolder.SINGLETON.getDebrider().login(username, password);
     }
 
     @Override
@@ -91,9 +84,9 @@ public class LoginFragment extends AlldebridFragment {
 
     @Override
     public void onLogin(int status) {
-        if (status == AbstractAlldebrid.LOGIN_SUCCESSFUL)
+        if (status == AbstractDebrider.LOGIN_SUCCESSFUL)
             mButtonLogin.setProgress(100);
-        else if (status == AbstractAlldebrid.LOGIN_FAILED) {
+        else if (status == AbstractDebrider.LOGIN_FAILED) {
             mButtonLogin.setProgress(-1);
             mButtonLogin.setEnabled(true);
             etPassword.setEnabled(true);

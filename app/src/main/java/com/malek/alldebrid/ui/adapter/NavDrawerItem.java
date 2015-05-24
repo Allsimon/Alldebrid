@@ -55,6 +55,10 @@ public abstract class NavDrawerItem {
         return this.count;
     }
 
+    public void setCount(String count) {
+        this.count = count;
+    }
+
     public void setCount(int count) {
         this.count = "" + count;
     }
@@ -65,10 +69,6 @@ public abstract class NavDrawerItem {
 
     public void setCounterVisibility(boolean isCounterVisible) {
         this.isCounterVisible = isCounterVisible;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
     }
 
 }

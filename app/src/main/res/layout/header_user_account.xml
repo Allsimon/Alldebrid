@@ -3,32 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/space_horizontal_margin"
     android:paddingBottom="@dimen/space_content"
+    android:paddingLeft="@dimen/space_horizontal_margin"
+    android:paddingStart="@dimen/space_horizontal_margin"
     android:paddingTop="@dimen/space_content">
 
 
     <ImageView
         android:id="@+id/img_account"
-        android:alpha="@dimen/material_text_contrast_high"
         android:layout_width="@dimen/icon_big"
         android:layout_height="@dimen/icon_big"
+        android:alpha="@dimen/material_text_contrast_high"
         android:src="@drawable/ic_account_header" />
 
     <TextView
         android:id="@+id/tv_dl_username"
+        style="@style/material_text_headline"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/material_text_headline" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_dl_secondary"
+        style="@style/material_text_subhead_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/space_content"
-        style="@style/material_text_subhead_device" />
+        android:paddingBottom="@dimen/space_content" />
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 </LinearLayout>

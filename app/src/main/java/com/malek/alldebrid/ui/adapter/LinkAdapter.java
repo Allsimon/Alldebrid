@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class LinkAdapter extends BaseAdapter {
             holder.tvWeight = getTextView(R.id.tv_weight, cv);
             holder.tvHost = getTextView(R.id.tv_host, cv);
             holder.ibOverflow = (ImageButton) cv.findViewById(R.id.ibOverflow);
+            holder.ivAlert = (ImageView) cv.findViewById(R.id.ivAlert);
             cv.setTag(holder);
         } else {
             holder = (ViewHolder) cv.getTag();
@@ -61,6 +63,7 @@ public class LinkAdapter extends BaseAdapter {
         if (link.isBugged()) {
             // Something went wrong
             holder.tvHost.setText(link.getOriginalLink());
+            holder.ivAlert.setVisibility(View.VISIBLE);
             if (!"".equals(link.getWeight()))
                 holder.tvName.setText(link.getWeight());
         } else {
@@ -106,6 +109,7 @@ public class LinkAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView tvName, tvWeight, tvHost;
+        ImageView ivAlert;
         ImageButton ibOverflow;
     }
 }

@@ -5,12 +5,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 
-import com.malek.alldebrid.API.API_Alldebrid;
-import com.malek.alldebrid.API.abstracted.AlldebridObserver;
+import com.malek.alldebrid.API.abstracted.DebridObserver;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.R;
 
 
-public abstract class AlldebridFragment extends Fragment implements AlldebridObserver {
+public abstract class DebridFragment extends Fragment implements DebridObserver {
     public FragmentChanger mFragmentChanger;
 
     public boolean isLargeLandscapeScreen() {
@@ -20,14 +20,14 @@ public abstract class AlldebridFragment extends Fragment implements AlldebridObs
     @Override
     public void onResume() {
         super.onResume();
-        API_Alldebrid.getInstance().registerObserver(this);
+        SingletonHolder.SINGLETON.getDebrider().registerObserver(this);
         mFragmentChanger = (FragmentChanger) getActivity();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        API_Alldebrid.getInstance().removeObserver(this);
+        SingletonHolder.SINGLETON.getDebrider().removeObserver(this);
     }
 
     public String getClipboard() {

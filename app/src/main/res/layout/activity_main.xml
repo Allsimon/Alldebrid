@@ -13,12 +13,12 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/toolbar"
-            android:background="@color/background_material_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize" />
+            android:background="@color/background_material_dark"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/container"
@@ -28,13 +28,13 @@
 
     <ListView
         android:id="@+id/list_slidermenu"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="@dimen/nav_drawer"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@android:color/background_light"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector"
-        android:background="@android:color/background_light" />
+        android:listSelector="@drawable/list_selector" />
 </android.support.v4.widget.DrawerLayout>

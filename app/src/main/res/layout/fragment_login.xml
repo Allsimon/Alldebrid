@@ -33,10 +33,10 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
+            style="@style/material_text_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username"
-            style="@style/material_text_headline" />
+            android:text="@string/username" />
 
         <EditText
             android:id="@+id/username"
@@ -47,11 +47,11 @@
             android:paddingTop="8dp" />
 
         <TextView
+            style="@style/material_text_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:text="@string/password"
-            style="@style/material_text_headline" />
+            android:text="@string/password" />
 
         <EditText
             android:id="@+id/password"
@@ -64,6 +64,7 @@
 
         <com.dd.processbutton.iml.ActionProcessButton
             android:id="@+id/loginButton"
+            style="@style/material_text_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
@@ -75,27 +76,26 @@
             custom:pb_colorProgress="@color/purple_progress"
             custom:pb_textComplete="@string/success"
             custom:pb_textError="@string/error"
-            custom:pb_textProgress="@string/loading"
-            style="@style/material_text_button" />
+            custom:pb_textProgress="@string/loading" />
 
         <TextView
             android:id="@+id/tv_createAccount"
+            style="@style/material_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:paddingTop="8dp"
-            android:text="@string/create_account"
-            style="@style/material_text_caption" />
+            android:text="@string/create_account" />
 
         <Button
             android:id="@+id/logoutButton"
+            style="@style/material_text_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/logout"
-            android:visibility="gone"
-            style="@style/material_text_button" />
+            android:visibility="gone" />
     </LinearLayout>
 
 

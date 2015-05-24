@@ -2,14 +2,14 @@ package com.malek.alldebrid;
 
 import android.widget.TextView;
 
-import com.malek.alldebrid.API.API_Alldebrid;
-import com.malek.alldebrid.API.abstracted.AbstractAlldebrid;
-import com.malek.alldebrid.API.abstracted.AlldebridObserver;
+import com.malek.alldebrid.API.abstracted.AbstractDebrider;
+import com.malek.alldebrid.API.abstracted.DebridObserver;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.API.pojo.Account;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 import com.malek.alldebrid.ui.adapter.NavDrawerItem;
-import com.malek.alldebrid.ui.fragment.AlldebridFragment;
+import com.malek.alldebrid.ui.fragment.DebridFragment;
 import com.malek.alldebrid.ui.fragment.LinkFragment_;
 import com.malek.alldebrid.ui.fragment.LoginFragment_;
 import com.malek.alldebrid.ui.fragment.PreferenceFragment;
@@ -23,13 +23,13 @@ import java.util.ArrayList;
 
 
 @EActivity
-public class MyActivity extends AbstractActivity implements AlldebridFragment.FragmentChanger, AlldebridObserver {
+public class MyActivity extends AbstractActivity implements DebridFragment.FragmentChanger, DebridObserver {
 
 
     @AfterInject
     public void addCallbacks() {
-        API_Alldebrid.init(this);
-        API_Alldebrid.getInstance().registerObserver(this);
+        SingletonHolder.SINGLETON.init(this);
+        SingletonHolder.SINGLETON.getDebrider().registerObserver(this);
     }
 
 
@@ -42,7 +42,7 @@ public class MyActivity extends AbstractActivity implements AlldebridFragment.Fr
                 changeFragment(new LinkFragment_());
             }
         });
-        mNavDrawerItems.add(new NavDrawerItem(getResources().getString(R.string.torrent), R.drawable.ic_torrent, API_Alldebrid.getInstance().getTorrentNumbers()) {
+        mNavDrawerItems.add(new NavDrawerItem(getResources().getString(R.string.torrent), R.drawable.ic_torrent, SingletonHolder.SINGLETON.getPersister().getTorrentsAmount()) {
             public void onClick() {
                 changeFragment(new TorrentFragment_());
             }
@@ -53,7 +53,7 @@ public class MyActivity extends AbstractActivity implements AlldebridFragment.Fr
                 changeFragment(new PreferenceFragment());
             }
         });
-        mNavDrawerItems.add(new NavDrawerItem(getResources().getString(R.string.account), R.drawable.ic_account, API_Alldebrid.getInstance().getAccountInfo().daysLeft()) {
+        mNavDrawerItems.add(new NavDrawerItem(getResources().getString(R.string.account), R.drawable.ic_account, SingletonHolder.SINGLETON.getPersister().getAccount().daysLeft()) {
             @Override
             public void onClick() {
                 changeFragment(new LoginFragment_());
@@ -64,14 +64,14 @@ public class MyActivity extends AbstractActivity implements AlldebridFragment.Fr
     }
 
     private void refreshHeader() {
-        Account account = API_Alldebrid.getInstance().getAccountInfo();
+        Account account = SingletonHolder.SINGLETON.getPersister().getAccount();
         ((TextView) findViewById(R.id.tv_dl_username)).setText(account.getUsername());
         ((TextView) findViewById(R.id.tv_dl_secondary)).setText(account.getEmailAdress());
     }
 
     @Override
     public void initFragment() {
-        if (API_Alldebrid.getInstance().isLogged())
+        if (SingletonHolder.SINGLETON.getDebrider().isLogged())
             changeFragment(new LinkFragment_());
         else
             changeFragment(new LoginFragment_());
@@ -99,7 +99,7 @@ public class MyActivity extends AbstractActivity implements AlldebridFragment.Fr
 
     @Override
     public void onLogin(int status) {
-        if (AbstractAlldebrid.LOGIN_SUCCESSFUL == status) {
+        if (AbstractDebrider.LOGIN_SUCCESSFUL == status) {
             changeFragment(new LinkFragment_());
             prepareListData();
         }
@@ -107,7 +107,9 @@ public class MyActivity extends AbstractActivity implements AlldebridFragment.Fr
 
     @Override
     public void onTorrentFetched(Torrent[] torrents) {
-
+        SingletonHolder.SINGLETON.getPersister().persistTorrentsAmount(torrents.length);
+        // Refresh the torrent counter in the nav drawer
+        prepareListData();
     }
 
     @Override

@@ -9,53 +9,64 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_toStartOf="@+id/tv_weight"
-        android:layout_toLeftOf="@+id/tv_weight"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_marginLeft="@dimen/space_horizontal_margin"
         android:layout_marginStart="@dimen/space_horizontal_margin"
-        android:paddingTop="@dimen/space_content"
-        android:orientation="vertical">
+        android:layout_toEndOf="@+id/ivAlert"
+        android:layout_toLeftOf="@+id/tv_weight"
+        android:layout_toRightOf="@+id/ivAlert"
+        android:layout_toStartOf="@+id/tv_weight"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/space_content">
 
         <TextView
             android:id="@+id/tv_name"
+            style="@style/material_text_body2_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tool:text="Big buck bunny"
-            style="@style/material_text_body2_device" />
+            tool:text="Big buck bunny" />
 
         <TextView
             android:id="@+id/tv_host"
+            style="@style/material_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/secondary_text_light"
-            tool:text="uptobox"
-            style="@style/material_text_caption" />
+            tool:text="uptobox" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_weight"
+        style="@style/material_text_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/space_horizontal_margin"
-        tool:text="247Mo"
+        android:layout_marginRight="@dimen/space_horizontal_margin"
         android:layout_toLeftOf="@+id/ibOverflow"
         android:layout_toStartOf="@+id/ibOverflow"
-        android:layout_marginRight="@dimen/space_horizontal_margin"
-        style="@style/material_text_caption" />
+        tool:text="247Mo" />
 
     <ImageButton
         android:id="@+id/ibOverflow"
+        style="@style/material_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:contentDescription="@string/desc_overflow_button"
-        android:layout_marginRight="@dimen/space_horizontal_margin"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="@dimen/space_horizontal_margin"
+        android:layout_marginRight="@dimen/space_horizontal_margin"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_action_overflow"
-        style="@style/material_icon" />
+        android:contentDescription="@string/desc_overflow_button"
+        android:src="@drawable/ic_action_overflow" />
+
+    <ImageView
+        android:id="@+id/ivAlert"
+        style="@style/material_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/space_horizontal_margin"
+        android:layout_marginStart="@dimen/space_horizontal_margin"
+        android:src="@drawable/ic_alert"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -4,7 +4,7 @@ package com.malek.alldebrid.API.abstracted;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.API.pojo.Torrent;
 
-public interface AlldebridObserver {
+public interface DebridObserver {
 
     public void onLinkRestrained(Link link);
 

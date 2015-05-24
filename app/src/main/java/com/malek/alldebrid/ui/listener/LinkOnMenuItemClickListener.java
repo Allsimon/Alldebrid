@@ -4,7 +4,7 @@ import android.content.ClipboardManager;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 
-import com.malek.alldebrid.API.API_Alldebrid;
+import com.malek.alldebrid.API.abstracted.SingletonHolder;
 import com.malek.alldebrid.API.pojo.Link;
 import com.malek.alldebrid.R;
 
@@ -16,7 +16,7 @@ public abstract class LinkOnMenuItemClickListener implements PopupMenu.OnMenuIte
                 copyToClipboard(getLink().getUnrestrainedLink());
                 break;
             case R.id.action_redebrid:
-                API_Alldebrid.getInstance().unrestrainLink(getLink().getOriginalLink());
+                SingletonHolder.SINGLETON.getDebrider().unrestrainLink(getLink().getOriginalLink());
                 break;
         }
         return true;

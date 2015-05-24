@@ -7,6 +7,15 @@
     <string name="login">Login</string>
     <string name="success">Success</string>
     <string name="error">Error</string>
+    <string name="error_account_not_premium">Your account is not premium</string>
+    <string name="error_ip_not_allowed">Your IP is blacklisted</string>
+    <string name="error_host_maintenance">Host under maintenance</string>
+    <string name="error_no_server_available">We used all our bandwidth :\'(</string>
+    <string name="error_no_traffic">Too much download on this hoster for today</string>
+    <string name="error_down_on_hoster">This link is down</string>
+    <string name="error_hoster_not_supported">Hoster not supported (or something went wrong)</string>
+    <string name="error_max_simu_down">Too much download on this hoster</string>
+    <string name="error_unknown">Something went wrong </string>
     <string name="loading">Loading…</string>
     <string name="username">Username</string>
     <string name="create_account"><a href="http://www.alldebrid.com/register/">Create an account</a></string>

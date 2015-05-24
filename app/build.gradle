@@ -20,7 +20,7 @@ repositories {
 apply plugin: "com.android.application"
 apply plugin: 'android-apt'
 apply plugin: 'com.trello.victor'
-def AAVersion = '3.3-SNAPSHOT'
+def AAVersion = '3.3'
 
 apt {
     arguments {
@@ -30,13 +30,13 @@ apt {
 }
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.malek.alldebrid"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -46,7 +46,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
