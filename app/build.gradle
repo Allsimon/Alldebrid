@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.trello:victor:0.1.2'
     }
@@ -31,7 +31,7 @@ apt {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "com.malek.alldebrid"
@@ -46,7 +46,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -60,11 +60,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'org.jsoup:jsoup:1.8.2'
     compile 'com.loopj.android:android-async-http:1.4.5'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.3'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-    compile 'com.nononsenseapps:filepicker:2.0.3'
+    compile 'com.nononsenseapps:filepicker:2.2'
 }

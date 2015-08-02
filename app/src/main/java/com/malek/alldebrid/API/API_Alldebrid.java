@@ -15,6 +15,7 @@ import com.malek.alldebrid.API.utils.MyAsyncHttpResponseHandler;
 import com.malek.alldebrid.API.utils.Utils;
 import com.malek.alldebrid.API.utils.XMLHandler;
 import com.malek.alldebrid.R;
+import com.malek.alldebrid.utils.Logg;
 
 import org.apache.http.Header;
 import org.apache.http.client.CookieStore;
@@ -61,7 +62,8 @@ public class API_Alldebrid extends AbstractDebrider {
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                         String response = Utils.parseByte(responseBody);
                         Torrent[] torrents = Utils.parseTorrentsLink(response);
-                        notifyObserverTorrentListFetched(torrents);
+                        if ((torrents != null ? torrents.length : 0) > 0)
+                            notifyObserverTorrentListFetched(torrents);
                     }
                 });
     }

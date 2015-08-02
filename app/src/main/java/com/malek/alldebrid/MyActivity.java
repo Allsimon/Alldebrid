@@ -1,5 +1,6 @@
 package com.malek.alldebrid;
 
+import android.net.Uri;
 import android.widget.TextView;
 
 import com.malek.alldebrid.API.abstracted.AbstractDebrider;
@@ -30,6 +31,13 @@ public class MyActivity extends AbstractActivity implements DebridFragment.Fragm
     public void addCallbacks() {
         SingletonHolder.SINGLETON.init(this);
         SingletonHolder.SINGLETON.getDebrider().registerObserver(this);
+        Uri data = getIntent().getData();
+        if (data != null) {
+            if (data.toString().startsWith("magnet"))
+                SingletonHolder.SINGLETON.getDebrider().addTorrent(data.toString(), true, false);
+            else
+                SingletonHolder.SINGLETON.getDebrider().unrestrainLink(data.toString());
+        }
     }
 
 

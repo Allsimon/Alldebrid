@@ -4,7 +4,9 @@ import com.malek.alldebrid.API.pojo.Torrent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Utils {
@@ -33,23 +35,27 @@ public class Utils {
     public static Torrent[] parseTorrentsLink(String link) {
         if ("Invalid cookie.".equals(link))
             return null;
-        String links[] = link.replace("[[", "").replace("]]", "")
+        String[] links = link.replace("[[", "").replace("]]", "")
                 .split("\\],\\[");
-        Torrent torrent[] = new Torrent[links.length];
-        for (int i = 0; i < links.length; i++) {
-            String test[] = links[i].split("\",\"");
-            torrent[i] = new Torrent();
-            torrent[i].setId(Integer.parseInt(test[1].replace("\"", "")));
-            torrent[i].setName(test[3]);
-            torrent[i].setStatus(test[4]);
-            torrent[i].setDownloaded(test[5]);
-            torrent[i].setWeight(test[6]);
-            torrent[i].setSeederNumber(test[7]);
-            torrent[i].setDownloadSpeed(test[8]);
-            if (test[4].contains("finished"))
-                torrent[i].setUnrestrainedLink(test[10].replace(",;,", "\n"));
+        List<Torrent> torrents = new ArrayList<>();
+        Torrent torrent;
+        for (String link_temp : links) {
+            String test[] = link_temp.split("\",\"");
+            if (test.length > 1) {
+                torrent = new Torrent();
+                torrent.setId(Integer.parseInt(test[1].replace("\"", "")));
+                torrent.setName(test[3]);
+                torrent.setStatus(test[4]);
+                torrent.setDownloaded(test[5]);
+                torrent.setWeight(test[6]);
+                torrent.setSeederNumber(test[7]);
+                torrent.setDownloadSpeed(test[8]);
+                if (test[4].contains("finished"))
+                    torrent.setUnrestrainedLink(test[10].replace(",;,", "\n"));
+                torrents.add(torrent);
+            }
         }
-        return torrent;
+        return torrents.toArray(new Torrent[torrents.size()]);
     }
 
     public static String parseByte(byte[] bytes) {
