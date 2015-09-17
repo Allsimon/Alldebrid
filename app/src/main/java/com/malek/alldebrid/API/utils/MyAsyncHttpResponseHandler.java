@@ -15,6 +15,6 @@ public abstract class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandle
     }
 
     @Override
-    public void onProgress(int bytesWritten, int totalSize) {
+    public void onProgress(long bytesWritten, long totalSize) {
     }
 }
