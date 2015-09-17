@@ -23,4 +23,4 @@ This project could use:
  * moar features !
 
 ### License
-[DBAD](http://www.dbad-license.org/)
+GPLv3
