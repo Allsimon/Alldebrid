@@ -230,9 +230,9 @@ class _UnlockFileButtonState extends ConsumerState<_UnlockFileButton> {
       AsyncSnapshot(connectionState: ConnectionState.none) => IconButton(
         tooltip: 'Unlock',
         icon: const Icon(Icons.lock_open),
-        onPressed: () => setState(
-          () => _unlocked = ref.read(clientProvider).unlock(widget.file.link),
-        ),
+        onPressed: () => setState(() {
+          _unlocked = ref.read(clientProvider).unlock(widget.file.link);
+        }),
       ),
       AsyncSnapshot(hasData: true, :final data) => FileActions(
         url: data!.link,

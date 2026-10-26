@@ -5,6 +5,7 @@ import 'package:alldebrid/api/errors.dart';
 import 'package:alldebrid/api/models.dart';
 import 'package:alldebrid/auth/pin_login_screen.dart';
 import 'package:alldebrid/links/links_screen.dart';
+import 'package:alldebrid/magnets/magnets_screen.dart';
 import 'package:alldebrid/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,29 @@ class FakeClient extends Fake implements AllDebridClient {
 
   @override
   Future<String?> checkPin(Pin pin) async => ++pinChecks < 2 ? null : 'k3y';
+
+  @override
+  Future<List<Magnet>> magnets() async => const [
+    Magnet(
+      id: 7,
+      filename: 'show',
+      size: 10,
+      status: 'Ready',
+      statusCode: 4,
+      downloaded: 10,
+      seeders: 0,
+      downloadSpeed: 0,
+    ),
+  ];
+
+  @override
+  Future<List<MagnetFile>> magnetFiles(int id) async => const [
+    MagnetFile(
+      path: 'show/ep1.mkv',
+      size: 10,
+      link: 'https://host.example/ep1',
+    ),
+  ];
 }
 
 Future<ProviderContainer> pump(
@@ -114,5 +138,36 @@ void main() {
     await tester.pump();
     expect(client.pinChecks, 2);
     expect(container.read(authProvider), 'k3y');
+  });
+
+  testWidgets('magnet files unlock on tap', (tester) async {
+    final client = FakeClient();
+    final container = await pump(tester, client, const MagnetsScreen());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('show'));
+    await tester.pumpAndSettle();
+    expect(find.text('show/ep1.mkv'), findsOneWidget);
+    expect(client.unlocks, isEmpty);
+
+    await tester.tap(find.byTooltip('Unlock'));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(client.unlocks.keys, ['https://host.example/ep1']);
+
+    client.unlocks['https://host.example/ep1']!.complete(
+      const UnlockedLink(
+        original: 'https://host.example/ep1',
+        link: 'https://cdn.example/ep1.mkv',
+        filename: 'ep1.mkv',
+        host: 'example',
+        size: 10,
+      ),
+    );
+    await tester.pump();
+    expect(find.byTooltip('Download'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    container.dispose();
   });
 }
