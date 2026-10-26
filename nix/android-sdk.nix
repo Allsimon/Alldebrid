@@ -6,15 +6,13 @@
 
 let
   android = androidenv.composeAndroidPackages {
+    # compileSdk of jni (35), Flutter's default (36), the app and receive_sharing_intent (37).
     platformVersions = [
       "35"
       "36"
       "37"
     ];
-    buildToolsVersions = [
-      "35.0.0"
-      "36.0.0"
-    ];
+    buildToolsVersions = [ "36.0.0" ];
     includeNDK = true;
     ndkVersions = [ "28.2.13676358" ];
     cmakeVersions = [ "3.22.1" ];
