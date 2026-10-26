@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../download/downloads_controller.dart';
 import '../providers.dart';
 
 /// Open / download / copy buttons for an unlocked direct link.
@@ -11,19 +12,11 @@ class FileActions extends ConsumerWidget {
   final String url;
   final String filename;
 
-  Future<void> _download(BuildContext context, WidgetRef ref) async {
-    final messenger = ScaffoldMessenger.of(context);
-    if (!ref.read(useDownloaderProvider)) {
-      return ref.read(downloadServiceProvider).open(url);
-    }
-    messenger.showSnackBar(SnackBar(content: Text('Downloading $filename')));
-    try {
-      await ref.read(downloadServiceProvider).download(url, filename);
-      messenger.showSnackBar(
-        SnackBar(content: Text('$filename saved to Downloads')),
-      );
-    } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('$e')));
+  void _download(WidgetRef ref) {
+    if (ref.read(useDownloaderProvider)) {
+      ref.read(downloadsProvider.notifier).start(url, filename);
+    } else {
+      ref.read(downloadServiceProvider).open(url);
     }
   }
 
@@ -48,7 +41,7 @@ class FileActions extends ConsumerWidget {
       IconButton(
         tooltip: 'Download',
         icon: const Icon(Icons.download),
-        onPressed: () => _download(context, ref),
+        onPressed: () => _download(ref),
       ),
     ],
   );
