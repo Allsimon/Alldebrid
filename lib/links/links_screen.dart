@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../download/downloads_controller.dart';
 import '../format.dart';
+import '../widgets/batch_select_dialog.dart';
 import '../widgets/file_actions.dart';
 import 'links_controller.dart';
 
@@ -37,6 +38,23 @@ class _LinksScreenState extends ConsumerState<LinksScreen> {
     ref.read(linksProvider.notifier).unlockAll(text);
   }
 
+  Future<void> _downloadAll(List<LinkEntry> entries) async {
+    final links = await showBatchSelectDialog(
+      context,
+      title: 'Download links',
+      items: [
+        for (final e in entries)
+          if (e.result.value case final link?)
+            BatchItem(label: link.filename, size: link.size, value: link),
+      ],
+    );
+    if (links == null || !mounted) return;
+    for (final link in links) {
+      ref.read(downloadsProvider.notifier).start(link.link, link.filename);
+    }
+    context.go('/downloads');
+  }
+
   @override
   Widget build(BuildContext context) {
     final entries = ref.watch(linksProvider);
@@ -46,18 +64,9 @@ class _LinksScreenState extends ConsumerState<LinksScreen> {
         actions: [
           if (entries.any((e) => e.result.hasValue))
             IconButton(
-              tooltip: 'Download all',
+              tooltip: 'Download…',
               icon: const Icon(Icons.download_for_offline),
-              onPressed: () {
-                for (final e in entries) {
-                  if (e.result.value case final link?) {
-                    ref
-                        .read(downloadsProvider.notifier)
-                        .start(link.link, link.filename);
-                  }
-                }
-                context.go('/downloads');
-              },
+              onPressed: () => _downloadAll(entries),
             ),
           if (entries.isNotEmpty)
             IconButton(

@@ -7,6 +7,7 @@ import '../api/models.dart';
 import '../download/downloads_controller.dart';
 import '../format.dart';
 import '../providers.dart';
+import '../widgets/batch_select_dialog.dart';
 import '../widgets/file_actions.dart';
 import 'magnets_controller.dart';
 
@@ -205,13 +206,22 @@ class _MagnetFilesSheet extends ConsumerWidget {
             ),
             trailing: FilledButton.icon(
               icon: const Icon(Icons.download),
-              label: const Text('Download all'),
-              onPressed: () {
+              label: const Text('Download…'),
+              onPressed: () async {
+                final router = GoRouter.of(context);
+                final selected = await showBatchSelectDialog(
+                  context,
+                  title: magnet.filename,
+                  items: [
+                    for (final f in files)
+                      BatchItem(label: f.path, size: f.size, value: f),
+                  ],
+                );
+                if (selected == null || !context.mounted) return;
                 final downloads = ref.read(downloadsProvider.notifier);
-                for (final file in files) {
+                for (final file in selected) {
                   downloads.unlockAndStart(file.link, file.path);
                 }
-                final router = GoRouter.of(context);
                 Navigator.pop(context);
                 router.go('/downloads');
               },
