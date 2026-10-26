@@ -1,11 +1,6 @@
 # Alldebrid Android
 Source code of the Alldebrid Android app.
 
-[![Build Status](https://travis-ci.org/Allsimon/Alldebrid.svg?branch=master)](https://travis-ci.org/Allsimon/Alldebrid)
-
-
-## [Install from Google Play Store](https://play.google.com/store/apps/details?id=com.emabot.alldebrid)
-
 ## Build locally
 First, install git and gradle
 ```bash
