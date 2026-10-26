@@ -9,7 +9,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -46,6 +46,11 @@
         JAVA_HOME = pkgs.jdk17.home;
         # aapt2 from maven is dynamically linked against FHS paths
         GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk.aapt2}";
+      };
+
+      checks.${system} = {
+        inherit (self.packages.${system}) linux android;
+        devShell = self.devShells.${system}.default;
       };
     };
 }

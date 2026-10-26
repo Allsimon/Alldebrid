@@ -27,46 +27,6 @@ jobs:
       - run: flutter analyze --fatal-infos
       - run: flutter test
 
-  android:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: 17
-          cache: gradle
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
-      - run: flutter build apk --release
-      - uses: actions/upload-artifact@v5
-        with:
-          name: alldebrid-android
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-  linux:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y clang cmake ninja-build pkg-config \
-            libgtk-3-dev libsecret-1-dev libjsoncpp-dev
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
-      - run: flutter build linux --release
-      - run: tar -czf alldebrid-linux-x64.tar.gz -C build/linux/x64/release/bundle .
-      - uses: actions/upload-artifact@v5
-        with:
-          name: alldebrid-linux-x64
-          path: alldebrid-linux-x64.tar.gz
-
   nix:
     needs: check
     runs-on: ubuntu-latest
@@ -78,16 +38,7 @@ jobs:
           name: alldebrid
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.ref != 'refs/heads/master' }}
-      # A cached output would still download its whole closure (SDK, NDK, Flutter).
-      - id: uncached
-        run: |
-          for attr in linux android devShells.x86_64-linux.default; do
-            out=$(nix eval --raw ".#$attr.outPath")
-            nix path-info --store https://alldebrid.cachix.org "$out" &>/dev/null || attrs+=" .#$attr"
-          done
-          echo "attrs=$attrs" >> "$GITHUB_OUTPUT"
       # The Android SDK, NDK and Flutter closures don't fit next to the preinstalled toolchains.
-      - if: steps.uncached.outputs.attrs != ''
-        run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
-      - if: steps.uncached.outputs.attrs != ''
-        run: nix build -L ${{ steps.uncached.outputs.attrs }}
+      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
+      # Plain `nix build` would download the closures of outputs already in Cachix.
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom
