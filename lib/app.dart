@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'account/account_screen.dart';
 import 'auth/apikey_login_screen.dart';
+import 'download/downloads_panel.dart';
 import 'auth/pin_login_screen.dart';
 import 'intents/incoming_intents.dart';
 import 'links/links_screen.dart';
@@ -101,13 +102,25 @@ class _Shell extends StatelessWidget {
               ],
             ),
             const VerticalDivider(width: 1),
-            Expanded(child: child),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(child: child),
+                  const DownloadsPanel(),
+                ],
+              ),
+            ),
           ],
         ),
       );
     }
     return Scaffold(
-      body: child,
+      body: Column(
+        children: [
+          Expanded(child: child),
+          const DownloadsPanel(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: select,

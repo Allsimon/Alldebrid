@@ -38,16 +38,28 @@ class DownloadService {
   }
 
   /// Downloads to the system Downloads folder; completes when the file is there.
-  Future<void> download(String url, String filename) async {
+  Future<void> download(
+    String url,
+    String filename, {
+    String? taskId,
+    void Function(double progress)? onProgress,
+  }) async {
     await _initialize();
     final task = DownloadTask(
+      taskId: taskId,
       url: url,
       filename: filename,
       updates: Updates.statusAndProgress,
       retries: 2,
       allowPause: true,
     );
-    final result = await FileDownloader().download(task);
+    final result = await FileDownloader().download(
+      task,
+      onProgress: (p) {
+        if (p >= 0) onProgress?.call(p);
+      },
+    );
+    if (result.status == TaskStatus.canceled) throw const DownloadCanceled();
     if (result.status != TaskStatus.complete) {
       throw Exception(
         result.exception?.description ?? 'Download ${result.status.name}',
@@ -61,4 +73,11 @@ class DownloadService {
       throw Exception('Could not move $filename to Downloads');
     }
   }
+
+  Future<void> cancel(String taskId) =>
+      FileDownloader().cancelTaskWithId(taskId);
+}
+
+class DownloadCanceled implements Exception {
+  const DownloadCanceled();
 }
