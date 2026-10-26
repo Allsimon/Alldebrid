@@ -66,3 +66,13 @@ jobs:
         with:
           name: alldebrid-linux-x64
           path: alldebrid-linux-x64.tar.gz
+
+  nix:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      # The Android SDK, NDK and Flutter closures don't fit next to the preinstalled toolchains.
+      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+      - run: nix build -L .#linux .#android
