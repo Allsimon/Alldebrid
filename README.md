@@ -24,6 +24,20 @@ flutter run -d linux
 flutter build apk
 ```
 
+Nix packages:
+
+```bash
+nix build .#linux     # result/bin/alldebrid
+nix build .#android   # result/alldebrid.apk
+```
+
+The Android build replays the Gradle downloads pinned in `nix/android-deps.json`.
+Refresh it after changing Flutter, plugins or Gradle config:
+
+```bash
+$(nix build .#android.mitmCache.updateScript --print-out-paths --no-link)
+```
+
 ## License
 
 GPLv3

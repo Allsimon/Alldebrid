@@ -49,3 +49,6 @@ app.*.map.json
 
 # direnv
 .direnv/
+
+# nix
+/result*
