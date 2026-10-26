@@ -41,6 +41,16 @@
         ],
         "executionMode": "branch"
       }
+    },
+    {
+      "description": "Merge non-major updates once CI passes",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
     }
   ]
 }
