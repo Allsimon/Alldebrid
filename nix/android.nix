@@ -16,7 +16,7 @@ let
   app = flutter.buildFlutterApplication {
     pname = "alldebrid-android";
     inherit (linux) version src;
-    inherit (linux.passthru) pubspecLock;
+    autoPubspecLock = ../pubspec.lock;
 
     nativeBuildInputs = [ gradle ];
 

@@ -80,6 +80,4 @@ jobs:
           name: alldebrid
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.ref != 'refs/heads/master' }}
-      - name: Check nix/pubspec.lock.json is up to date
-        run: nix run --inputs-from . nixpkgs#yq -- . pubspec.lock | diff - nix/pubspec.lock.json
       - run: nix build -L .#linux .#android .#devShells.x86_64-linux.default
