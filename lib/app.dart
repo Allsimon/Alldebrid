@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import 'account/account_screen.dart';
 import 'auth/apikey_login_screen.dart';
-import 'download/downloads_panel.dart';
+import 'download/downloads_controller.dart';
+import 'download/downloads_screen.dart';
 import 'auth/pin_login_screen.dart';
 import 'intents/incoming_intents.dart';
 import 'links/links_screen.dart';
@@ -16,7 +17,8 @@ const _seed = Color(0xFFFAC233);
 
 const _tabs = [
   (path: '/links', icon: Icons.link, label: 'Links'),
-  (path: '/magnets', icon: Icons.downloading, label: 'Magnets'),
+  (path: '/magnets', icon: Icons.cloud_download, label: 'Magnets'),
+  (path: '/downloads', icon: Icons.download, label: 'Downloads'),
   (path: '/account', icon: Icons.person, label: 'Account'),
 ];
 
@@ -47,6 +49,10 @@ final routerProvider = Provider((ref) {
         routes: [
           GoRoute(path: '/links', builder: (_, _) => const LinksScreen()),
           GoRoute(path: '/magnets', builder: (_, _) => const MagnetsScreen()),
+          GoRoute(
+            path: '/downloads',
+            builder: (_, _) => const DownloadsScreen(),
+          ),
           GoRoute(path: '/account', builder: (_, _) => const AccountScreen()),
         ],
       ),
@@ -74,18 +80,28 @@ class AllDebridApp extends ConsumerWidget {
   }
 }
 
-class _Shell extends StatelessWidget {
+class _Shell extends ConsumerWidget {
   const _Shell({required this.location, required this.child});
 
   final String location;
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final running = ref.watch(
+      downloadsProvider.select(
+        (downloads) =>
+            downloads.where((d) => d.state == DownloadState.running).length,
+      ),
+    );
+    Widget icon(({IconData icon, String label, String path}) tab) => Badge(
+      isLabelVisible: tab.path == '/downloads' && running > 0,
+      label: Text('$running'),
+      child: Icon(tab.icon),
+    );
     final index = _tabs.indexWhere((t) => location.startsWith(t.path));
     void select(int i) => context.go(_tabs[i].path);
-    final wide = MediaQuery.sizeOf(context).width >= 720;
-    if (wide) {
+    if (MediaQuery.sizeOf(context).width >= 720) {
       return Scaffold(
         body: Row(
           children: [
@@ -96,37 +112,25 @@ class _Shell extends StatelessWidget {
               destinations: [
                 for (final t in _tabs)
                   NavigationRailDestination(
-                    icon: Icon(t.icon),
+                    icon: icon(t),
                     label: Text(t.label),
                   ),
               ],
             ),
             const VerticalDivider(width: 1),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(child: child),
-                  const DownloadsPanel(),
-                ],
-              ),
-            ),
+            Expanded(child: child),
           ],
         ),
       );
     }
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: child),
-          const DownloadsPanel(),
-        ],
-      ),
+      body: child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: select,
         destinations: [
           for (final t in _tabs)
-            NavigationDestination(icon: Icon(t.icon), label: t.label),
+            NavigationDestination(icon: icon(t), label: t.label),
         ],
       ),
     );

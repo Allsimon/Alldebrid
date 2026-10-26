@@ -3,22 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'downloads_controller.dart';
 
-class DownloadsPanel extends ConsumerWidget {
-  const DownloadsPanel({super.key});
+class DownloadsScreen extends ConsumerWidget {
+  const DownloadsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final downloads = ref.watch(downloadsProvider);
-    if (downloads.isEmpty) return const SizedBox.shrink();
-    return Material(
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxHeight: 200),
-        child: ListView(
-          shrinkWrap: true,
-          children: [for (final d in downloads) _DownloadTile(d)],
-        ),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Downloads')),
+      body: downloads.isEmpty
+          ? const Center(child: Text('No downloads yet'))
+          : ListView(
+              children: [for (final d in downloads.reversed) _DownloadTile(d)],
+            ),
     );
   }
 }
@@ -33,7 +30,6 @@ class _DownloadTile extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
     final controller = ref.read(downloadsProvider.notifier);
     return ListTile(
-      dense: true,
       leading: switch (download.state) {
         DownloadState.running => const Icon(Icons.downloading),
         DownloadState.done => Icon(Icons.check_circle, color: colors.primary),
