@@ -37,11 +37,13 @@ class DownloadService {
     _initialized = true;
   }
 
-  /// Downloads to the system Downloads folder; completes when the file is there.
+  /// Downloads to the system Downloads folder, under [directory] if given;
+  /// completes when the file is there.
   Future<void> download(
     String url,
     String filename, {
     String? taskId,
+    String directory = '',
     void Function(double progress)? onProgress,
   }) async {
     await _initialize();
@@ -68,6 +70,7 @@ class DownloadService {
     if (await FileDownloader().moveToSharedStorage(
           task,
           SharedStorage.downloads,
+          directory: directory,
         ) ==
         null) {
       throw Exception('Could not move $filename to Downloads');

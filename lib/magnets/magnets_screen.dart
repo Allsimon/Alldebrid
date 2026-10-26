@@ -1,8 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../api/models.dart';
+import '../download/downloads_controller.dart';
 import '../format.dart';
 import '../providers.dart';
 import '../widgets/file_actions.dart';
@@ -196,6 +198,26 @@ class _MagnetFilesSheet extends ConsumerWidget {
       AsyncData(value: final files) => ListView(
         controller: scroll,
         children: [
+          ListTile(
+            title: Text(magnet.filename),
+            subtitle: Text(
+              '${files.length} files · ${formatBytes(files.fold(0, (sum, f) => sum + f.size))}',
+            ),
+            trailing: FilledButton.icon(
+              icon: const Icon(Icons.download),
+              label: const Text('Download all'),
+              onPressed: () {
+                final downloads = ref.read(downloadsProvider.notifier);
+                for (final file in files) {
+                  downloads.unlockAndStart(file.link, file.path);
+                }
+                final router = GoRouter.of(context);
+                Navigator.pop(context);
+                router.go('/downloads');
+              },
+            ),
+          ),
+          const Divider(),
           for (final file in files)
             ListTile(
               title: Text(file.path),

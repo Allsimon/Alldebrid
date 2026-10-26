@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../download/downloads_controller.dart';
 import '../format.dart';
 import '../widgets/file_actions.dart';
 import 'links_controller.dart';
@@ -42,6 +44,21 @@ class _LinksScreenState extends ConsumerState<LinksScreen> {
       appBar: AppBar(
         title: const Text('Links'),
         actions: [
+          if (entries.any((e) => e.result.hasValue))
+            IconButton(
+              tooltip: 'Download all',
+              icon: const Icon(Icons.download_for_offline),
+              onPressed: () {
+                for (final e in entries) {
+                  if (e.result.value case final link?) {
+                    ref
+                        .read(downloadsProvider.notifier)
+                        .start(link.link, link.filename);
+                  }
+                }
+                context.go('/downloads');
+              },
+            ),
           if (entries.isNotEmpty)
             IconButton(
               tooltip: 'Clear',
