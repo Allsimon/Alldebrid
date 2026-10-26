@@ -1,17 +1,11 @@
 import 'dart:io';
 
 import 'package:background_downloader/background_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DownloadService {
-  DownloadService() {
-    FileDownloader().configureNotification(
-      running: const TaskNotification('Downloading', '{filename}'),
-      complete: const TaskNotification('Downloaded', '{filename}'),
-      error: const TaskNotification('Download failed', '{filename}'),
-      progressBar: true,
-    );
-  }
+  var _initialized = false;
 
   Future<void> open(String url) async {
     if (!await launchUrl(
@@ -22,11 +16,30 @@ class DownloadService {
     }
   }
 
-  /// Downloads to the system Downloads folder; completes when the file is there.
-  Future<void> download(String url, String filename) async {
+  Future<void> _initialize() async {
+    if (_initialized) return;
+    // On Linux, path_provider resolves user directories through `xdg-user-dir`;
+    // without it background_downloader fails with an unhandled exception.
+    if (Platform.isLinux && await getDownloadsDirectory() == null) {
+      throw Exception(
+        'Could not find the Downloads folder: install xdg-user-dirs',
+      );
+    }
+    FileDownloader().configureNotification(
+      running: const TaskNotification('Downloading', '{filename}'),
+      complete: const TaskNotification('Downloaded', '{filename}'),
+      error: const TaskNotification('Download failed', '{filename}'),
+      progressBar: true,
+    );
     if (Platform.isAndroid) {
       await FileDownloader().permissions.request(PermissionType.notifications);
     }
+    _initialized = true;
+  }
+
+  /// Downloads to the system Downloads folder; completes when the file is there.
+  Future<void> download(String url, String filename) async {
+    await _initialize();
     final task = DownloadTask(
       url: url,
       filename: filename,
