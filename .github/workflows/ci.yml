@@ -71,8 +71,6 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     steps:
-      # The Android SDK, NDK and Flutter closures don't fit next to the preinstalled toolchains.
-      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
       - uses: cachix/cachix-action@v16
@@ -80,4 +78,16 @@ jobs:
           name: alldebrid
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.ref != 'refs/heads/master' }}
-      - run: nix build -L .#linux .#android .#devShells.x86_64-linux.default
+      # A cached output would still download its whole closure (SDK, NDK, Flutter).
+      - id: uncached
+        run: |
+          for attr in linux android devShells.x86_64-linux.default; do
+            out=$(nix eval --raw ".#$attr.outPath")
+            nix path-info --store https://alldebrid.cachix.org "$out" &>/dev/null || attrs+=" .#$attr"
+          done
+          echo "attrs=$attrs" >> "$GITHUB_OUTPUT"
+      # The Android SDK, NDK and Flutter closures don't fit next to the preinstalled toolchains.
+      - if: steps.uncached.outputs.attrs != ''
+        run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
+      - if: steps.uncached.outputs.attrs != ''
+        run: nix build -L ${{ steps.uncached.outputs.attrs }}
