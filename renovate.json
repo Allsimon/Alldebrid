@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "nix": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Changes to Flutter, plugins or Gradle change the Android build's Gradle downloads",
+      "matchManagers": ["nix", "pub", "gradle", "gradle-wrapper"],
+      "postUpgradeTasks": {
+        "commands": ["nix-update --flake android --version=skip"],
+        "fileFilters": ["nix/android-deps.json"],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "postUpgradeTasks": {
+        "commands": ["nix-update --flake android --version=skip"],
+        "fileFilters": ["nix/android-deps.json"],
+        "executionMode": "branch"
+      }
+    }
+  ]
+}
