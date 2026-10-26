@@ -20,11 +20,12 @@
         };
       };
       androidSdk = pkgs.callPackage ./nix/android-sdk.nix { };
+      gradle = pkgs.gradle_9.override { java = pkgs.jdk17; };
     in
     {
       packages.${system} = rec {
         linux = pkgs.callPackage ./nix/linux.nix { };
-        android = pkgs.callPackage ./nix/android.nix { inherit androidSdk linux; };
+        android = pkgs.callPackage ./nix/android.nix { inherit androidSdk gradle linux; };
         default = linux;
       };
 
@@ -32,6 +33,7 @@
         packages = [
           pkgs.flutter
           pkgs.jdk17
+          gradle
           androidSdk.androidsdk
           pkgs.cmake
           pkgs.ninja
@@ -46,6 +48,11 @@
         JAVA_HOME = pkgs.jdk17.home;
         # aapt2 from maven is dynamically linked against FHS paths
         GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk.aapt2}";
+        # Flutter runs android/gradlew; use Nix's gradle instead of the wrapper download.
+        shellHook = ''
+          root=$(git rev-parse --show-toplevel 2>/dev/null) && [ -d "$root/android" ] &&
+            printf '#!/bin/sh\nexec gradle "$@"\n' > "$root/android/gradlew" && chmod +x "$root/android/gradlew"
+        '';
       };
     };
 }
