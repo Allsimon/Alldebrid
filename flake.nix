@@ -9,7 +9,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -53,6 +53,11 @@
           root=$(git rev-parse --show-toplevel 2>/dev/null) && [ -d "$root/android" ] &&
             printf '#!/bin/sh\nexec gradle "$@"\n' > "$root/android/gradlew" && chmod +x "$root/android/gradlew"
         '';
+      };
+
+      checks.${system} = {
+        inherit (self.packages.${system}) linux android;
+        devShell = self.devShells.${system}.default;
       };
     };
 }
