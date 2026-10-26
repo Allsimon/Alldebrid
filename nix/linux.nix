@@ -20,16 +20,13 @@ let
       ../pubspec.lock
     ];
   };
-  # Import-from-derivation (yq at eval time) breaks nix-update, which evaluates
-  # read-only; regenerate with `yq . pubspec.lock > nix/pubspec.lock.json`.
-  pubspecLock = lib.importJSON ./pubspec.lock.json;
 in
 flutter.buildFlutterApplication {
   pname = "alldebrid";
+  # Not parsed with yq: nix-update evaluates `name` read-only and can't build it.
   version = builtins.head (builtins.match ".*\nversion: ([^\n]+).*" (builtins.readFile ../pubspec.yaml));
   inherit src;
-  inherit pubspecLock;
-  passthru = { inherit pubspecLock; };
+  autoPubspecLock = ../pubspec.lock;
 
   nativeBuildInputs = [ copyDesktopItems ];
   buildInputs = [

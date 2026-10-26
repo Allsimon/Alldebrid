@@ -20,12 +20,10 @@
       ],
       "postUpgradeTasks": {
         "commands": [
-          "yq . pubspec.lock > nix/pubspec.lock.json",
           "nix-update --flake android --version=skip"
         ],
         "fileFilters": [
-          "nix/android-deps.json",
-          "nix/pubspec.lock.json"
+          "nix/android-deps.json"
         ],
         "executionMode": "branch"
       }
@@ -36,12 +34,10 @@
       ],
       "postUpgradeTasks": {
         "commands": [
-          "yq . pubspec.lock > nix/pubspec.lock.json",
           "nix-update --flake android --version=skip"
         ],
         "fileFilters": [
-          "nix/android-deps.json",
-          "nix/pubspec.lock.json"
+          "nix/android-deps.json"
         ],
         "executionMode": "branch"
       }
