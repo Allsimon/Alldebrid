@@ -1,8 +1,6 @@
 {
   lib,
   flutter,
-  runCommand,
-  yq,
   makeDesktopItem,
   copyDesktopItems,
   libsecret,
@@ -11,7 +9,6 @@
 }:
 
 let
-  toJSON = file: lib.importJSON (runCommand "json" { } "${lib.getExe yq} . ${file} > $out");
   src = lib.fileset.toSource {
     root = ../.;
     fileset = lib.fileset.unions [
@@ -23,11 +20,13 @@ let
       ../pubspec.lock
     ];
   };
-  pubspecLock = toJSON ../pubspec.lock;
+  # Import-from-derivation (yq at eval time) breaks nix-update, which evaluates
+  # read-only; regenerate with `yq . pubspec.lock > nix/pubspec.lock.json`.
+  pubspecLock = lib.importJSON ./pubspec.lock.json;
 in
 flutter.buildFlutterApplication {
   pname = "alldebrid";
-  version = (toJSON ../pubspec.yaml).version;
+  version = builtins.head (builtins.match ".*\nversion: ([^\n]+).*" (builtins.readFile ../pubspec.yaml));
   inherit src;
   inherit pubspecLock;
   passthru = { inherit pubspecLock; };
