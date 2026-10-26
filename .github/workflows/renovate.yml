@@ -28,7 +28,7 @@ jobs:
           name: alldebrid
       - run: >-
           nix shell --inputs-from .
-          nixpkgs#renovate nixpkgs#nix-update nixpkgs#flutter
+          nixpkgs#renovate nixpkgs#nix-update nixpkgs#flutter nixpkgs#yq
           -c renovate
         env:
           RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
@@ -37,5 +37,5 @@ jobs:
           RENOVATE_ONBOARDING: "false"
           RENOVATE_REQUIRE_CONFIG: required
           RENOVATE_GIT_AUTHOR: "Renovate Bot <29139614+renovate[bot]@users.noreply.github.com>"
-          RENOVATE_ALLOWED_COMMANDS: '["^nix-update --flake android --version=skip$"]'
+          RENOVATE_ALLOWED_COMMANDS: '["^yq \\. pubspec\\.lock > nix/pubspec\\.lock\\.json$", "^nix-update --flake android --version=skip$"]'
           LOG_LEVEL: ${{ inputs.log_level || 'info' }}
