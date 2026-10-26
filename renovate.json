@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "group:allNonMajor"
   ],
   "nix": {
     "enabled": true
@@ -41,6 +42,16 @@
         ],
         "executionMode": "branch"
       }
+    },
+    {
+      "description": "Merge non-major updates once CI passes",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
     }
   ]
 }
