@@ -1,7 +1,7 @@
 {
   lib,
   flutter,
-  gradle_9,
+  gradle,
   jdk17,
   runtimeShell,
   androidSdk,
@@ -9,8 +9,6 @@
 }:
 
 let
-  gradle = gradle_9.override { java = jdk17; };
-
   # buildFlutterApplication only targets linux/web and strips the other engine
   # artifacts; its multiShell variant keeps the full Flutter, android included.
   app = flutter.buildFlutterApplication {
