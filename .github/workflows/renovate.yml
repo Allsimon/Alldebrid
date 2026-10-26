@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 4 * * 1"
   workflow_dispatch:
+    inputs:
+      log_level:
+        type: choice
+        options: [info, debug]
+        default: info
 
 concurrency:
   group: renovate
@@ -33,4 +38,4 @@ jobs:
           RENOVATE_REQUIRE_CONFIG: required
           RENOVATE_GIT_AUTHOR: "Renovate Bot <29139614+renovate[bot]@users.noreply.github.com>"
           RENOVATE_ALLOWED_COMMANDS: '["^nix-update --flake android --version=skip$"]'
-          LOG_LEVEL: info
+          LOG_LEVEL: ${{ inputs.log_level || 'info' }}
