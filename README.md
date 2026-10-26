@@ -1,21 +1,29 @@
-# Alldebrid Android
-Source code of the Alldebrid Android app.
+# AllDebrid
 
-## Build locally
-First, install git and gradle
+An unofficial [AllDebrid](https://alldebrid.com) client for Android and Linux, built with Flutter.
+
+- Unlock hoster links, then open them or download them to your Downloads folder
+- Add magnets and `.torrent` files, follow their progress and unlock the resulting files
+- See your premium status and host availability
+- On Android, share links, magnets or `.torrent` files to the app, or open `magnet:` links with it
+
+## Logging in
+
+The app uses the [AllDebrid API](https://docs.alldebrid.com). Log in with the PIN shown in the app
+by entering it on alldebrid.com, or paste an API key from
+[alldebrid.com/apikeys](https://alldebrid.com/apikeys).
+
+## Building
+
+The dev environment is provided by the Nix flake (Flutter, JDK, Android SDK, Linux desktop deps):
+
 ```bash
-$ git clone https://github.com/Allsimon/Alldebrid.git
-$ cd Alldebrid
-$ gradle build
+nix develop        # or `direnv allow`
+flutter test
+flutter run -d linux
+flutter build apk
 ```
 
-### Development
-Want to contribute? Great!   
-This project could use:
- * translation ;
- * redesigned UI ;
- * new icons ;
- * moar features !
+## License
 
-### License
 GPLv3
