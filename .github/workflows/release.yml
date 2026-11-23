@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
+      - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+        with:
+          name: alldebrid
+          skipPush: true
+      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
+      - name: Read version
+        run: |
+          tag="v$(sed -n 's/^version: *\([^+]*\).*/\1/p' pubspec.yaml)"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
+            echo "::error::Tag $tag already exists; bump the version in pubspec.yaml"
+            exit 1
+          fi
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+      - run: nix build .#android
+      # Signed outside Nix to keep the keystore out of the store and Cachix.
+      - name: Sign APK
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          base64 -d <<< "$KEYSTORE_BASE64" > "$RUNNER_TEMP/release.jks"
+          apksigner() { nix run --inputs-from . nixpkgs#apksigner -- "$@"; }
+          apksigner sign --ks "$RUNNER_TEMP/release.jks" --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD \
+            --out "alldebrid-$TAG.apk" result/alldebrid.apk
+          apksigner verify --print-certs "alldebrid-$TAG.apk"
+          rm "$RUNNER_TEMP/release.jks"
+      - run: gh release create "$TAG" "alldebrid-$TAG.apk" --target "$GITHUB_SHA" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
