@@ -28,7 +28,7 @@ Nix packages:
 
 ```bash
 nix build .#linux     # result/bin/alldebrid
-nix build .#android   # result/alldebrid.apk
+nix build .#android   # result/alldebrid-<abi>.apk
 ```
 
 The Android build replays the Gradle downloads pinned in `nix/android-deps.json`.
