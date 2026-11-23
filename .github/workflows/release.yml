@@ -19,7 +19,6 @@ jobs:
         with:
           name: alldebrid
           skipPush: true
-      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
       - name: Read version
         run: |
           tag="v$(sed -n 's/^version: *\([^+]*\).*/\1/p' pubspec.yaml)"

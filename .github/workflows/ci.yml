@@ -38,7 +38,5 @@ jobs:
           name: alldebrid
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.ref != 'refs/heads/master' }}
-      # The Android SDK, NDK and Flutter closures don't fit next to the preinstalled toolchains.
-      - run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
       # Plain `nix build` would download the closures of outputs already in Cachix.
       - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom
