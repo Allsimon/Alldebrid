@@ -42,20 +42,23 @@ let
 
     buildPhase = ''
       runHook preBuild
-      flutter build apk --release --no-pub
+      flutter build apk --release --no-pub --split-per-abi
       runHook postBuild
     '';
 
     # Record what the real build fetches. The generic nixDownloadDeps task that
     # would run next fails on Flutter's included gradle plugin build.
     preGradleUpdate = ''
-      flutter build apk --release --no-pub
+      flutter build apk --release --no-pub --split-per-abi
       exit 0
     '';
 
     installPhase = ''
       runHook preInstall
-      install -Dm644 build/app/outputs/flutter-apk/app-release.apk $out/alldebrid.apk
+      for apk in build/app/outputs/flutter-apk/app-*-release.apk; do
+        abi=''${apk##*/app-}
+        install -Dm644 "$apk" "$out/alldebrid-''${abi%-release.apk}.apk"
+      done
       mkdir -p $debug
       runHook postInstall
     '';
