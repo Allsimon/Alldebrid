@@ -1,7 +1,7 @@
 name: alldebrid
 description: "AllDebrid client for Android and Linux."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.13.3
