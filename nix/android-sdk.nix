@@ -6,6 +6,7 @@
 
 let
   android = androidenv.composeAndroidPackages {
+    toolsVersion = null;
     platformVersions = [ "36" ];
     buildToolsVersions = [ "36.0.0" ];
     includeNDK = true;
