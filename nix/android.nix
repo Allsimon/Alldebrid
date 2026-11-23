@@ -2,7 +2,7 @@
   lib,
   flutter,
   gradle,
-  jdk17,
+  jdk,
   runtimeShell,
   androidSdk,
   linux,
@@ -26,7 +26,7 @@ let
     env = {
       ANDROID_HOME = androidSdk;
       ANDROID_SDK_ROOT = androidSdk;
-      JAVA_HOME = jdk17.home;
+      JAVA_HOME = jdk.home;
       NIX_AAPT2_BINARY_PATH = androidSdk.aapt2;
     };
 
